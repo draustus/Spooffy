@@ -12,16 +12,20 @@ on run
 			try
 				set spotifyVolume to get sound volume
 			on error errMsg number errNum
+				set tm to current date
 				set errLog to open for access file errPath with write permission
-				write "Error during initial get volume call: " & errMsg & Â
+				write (date string of tm) & " " & (time string of tm) & " - " & Â
+					"Error during initial get volume call: " & errMsg & Â
 					" (" & errNum & ")\n" to errLog starting at eof
 				close access errLog
 			end try
 			try
 				set previousTrack to get spotify url of current track
 			on error errMsg number errNum
+				set tm to current date
 				set errLog to open for access file errPath with write permission
-				write "Error during initial get current track call: " & errMsg & Â
+				write (date string of tm) & " " & (time string of tm) & " - " & Â
+					"Error during initial get current track call: " & errMsg & Â
 					" (" & errNum & ")\n" to errLog starting at eof
 				close access errLog
 			end try
@@ -37,8 +41,10 @@ on idle
 					get {spotify url of current track, name of current track, Â
 						artist of current track, album of current track}
 		on error errMsg number errNum
+			set tm to current date
 			set errLog to open for access file errPath with write permission
-			write "Error getting current track info: " & errMsg & Â
+			write (date string of tm) & " " & (time string of tm) & " - " & Â
+				"Error getting current track info: " & errMsg & Â
 				"  (" & errNum & ")\n" to errLog starting at eof
 			close access errLog
 			set spotifyUrl to ""
@@ -55,12 +61,13 @@ on idle
 						set sound volume to adVolume
 					end tell
 				on error errMsg number errNum
+					set tm to current date
 					set errLog to open for access file errPath with write permission
-					write "Error switching to ads volume: " & errMsg & Â
+					write (date string of tm) & " " & (time string of tm) & " - " & Â
+						"Error switching to ads volume: " & errMsg & Â
 						" (" & errNum & ")\n" to errLog starting at eof
 					close access errLog
 				end try
-				delay 15 # ads are 15-30 seconds long
 			else if spotifyUrl starts with "spotify:track:" and Â
 				previousTrack starts with "spotify:ad:" then
 				if notifications then
@@ -70,8 +77,10 @@ on idle
 				try
 					tell application "Spotify" to set currentVolume to get sound volume
 				on error errMsg number errNum
+					set tm to current date
 					set errLog to open for access file errPath with write permission
-					write "Error trying to get current sound volume: " & errMsg & Â
+					write (date string of tm) & " " & (time string of tm) & " - " & Â
+						"Error trying to get current sound volume: " & errMsg & Â
 						" (" & errNum & ")\n" to errLog starting at eof
 					close access errLog
 				end try
@@ -79,13 +88,14 @@ on idle
 					try
 						tell application "Spotify" to set sound volume to spotifyVolume
 					on error errMsg number errNum
+						set tm to current date
 						set errLog to open for access file errPath with write permission
-						write "Error trying to set sound volume back: " & errMsg & Â
+						write (date string of tm) & " " & (time string of tm) & " - " & Â
+							"Error trying to set sound volume back: " & errMsg & Â
 							" (" & errNum & ")\n" to errLog starting at eof
 						close access errLog
 					end try
 				end if
-				delay 60 # we probably have a little time till the next wave
 			else if spotifyUrl starts with "spotify:track:" then
 				if notifications then
 					display notification "Artist: " & trackArtist & " | Album: " & Â
