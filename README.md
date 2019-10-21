@@ -1,6 +1,6 @@
 # Spooffy :bird:
 
-The friendly avian ad silencer! Spooffy monitors the Spotify application, and when it notices an ad, silences it for you. It re-enables sound when the ads are done and the next track plays.
+The friendly avian ad silencer for macOS! Spooffy monitors the Spotify application, and when it notices an ad, silences it for you. It re-enables sound when the ads are done and the next track plays.
 
 * Displays notifications of new tracks playing or when it's silencing ads
 * Written entirely in Applescript, no compiler necessary!
